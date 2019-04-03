@@ -37,6 +37,8 @@ from tensorflow.python.util.tf_export import tf_export
 from tensorflow.tools.docs import doc_controls
 
 
+# (zaman) : main class for cross device operations like reduction between multiple devices
+
 def check_destinations(destinations):
   """Checks whether `destinations` is not empty.
 
@@ -631,7 +633,9 @@ def _unpack_tensors(reduced, tensor_packer=None):
 
 
 class AllReduceCrossDeviceOps(CrossDeviceOps):
-  """Reduction using all-reduce."""
+  """Reduction using all-reduce.
+  todo(zaman) : here all_reduce_alg is defaulted as nccl/gpu. 
+  """
 
   def __init__(self,
                all_reduce_alg="nccl",
@@ -733,6 +737,7 @@ class AllReduceCrossDeviceOps(CrossDeviceOps):
     else:
       # TODO(yuefengz): check that gpu ids in `destinations` are in ascending
       # order.
+      # todo(zaman): need to add condition to support gpu, here it seems they are using only gpu supported version
       reduced = (
           cross_device_utils.aggregate_gradients_using_hierarchical_copy(
               destinations, device_grad_packs))
@@ -971,6 +976,8 @@ class CollectiveAllReduce(CrossDeviceOps):
     super(CollectiveAllReduce, self).__init__()
 
   def reduce_implementation(self, reduce_op, per_replica_value, destinations):
+    """(zaman) : important function for reduce implementations
+    """
     all_reduced = self._batch_all_reduce(reduce_op, [per_replica_value])[0]
     device_map, logical_device = get_device_map_from(destinations)
     if (all_reduced.device_map is device_map and

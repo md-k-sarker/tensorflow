@@ -49,6 +49,8 @@ from tensorflow.tools.docs import doc_controls
 # Context tracking whether in a strategy.update() or .update_non_slot() call.
 
 
+# (zaman): class tf.distribute.strategy or main distribution strategy is defined in this file.
+
 _update_device = threading.local()
 
 
