@@ -32,9 +32,18 @@ constexpr std::array<DataType, 10> kExecAllTypes = {
 
 class XlaInterpreterDeviceFactory : public DeviceFactory {
  public:
+  Status ListPhysicalDevices(std::vector<string>* devices) override;
   Status CreateDevices(const SessionOptions& options, const string& name_prefix,
                        std::vector<std::unique_ptr<Device>>* devices) override;
 };
+
+Status XlaInterpreterDeviceFactory::ListPhysicalDevices(
+    std::vector<string>* devices) {
+  devices->push_back(
+      absl::StrCat("/physical_device:", DEVICE_XLA_INTERPRETER, ":0"));
+
+  return Status::OK();
+}
 
 Status XlaInterpreterDeviceFactory::CreateDevices(
     const SessionOptions& session_options, const string& name_prefix,
@@ -48,7 +57,7 @@ Status XlaInterpreterDeviceFactory::CreateDevices(
   registration.autoclustering_policy =
       XlaOpRegistry::AutoclusteringPolicy::kAlways;
   registration.cluster_resource_variable_ops_unsafely = true;
-  registration.cluster_stack_ops = true;
+  registration.cluster_stack_ops = false;
   registration.cluster_tensor_array_ops = true;
   registration.cluster_stateful_rng_ops = true;
   registration.cluster_control_trigger = true;
