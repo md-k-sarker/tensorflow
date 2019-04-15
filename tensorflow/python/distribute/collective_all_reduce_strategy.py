@@ -44,6 +44,10 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.util.tf_export import tf_export
 
 
+# todo(zaman): MultiWorkerMirrorStrategy
+#alias for CollectiveAllReduceStrategy class
+#defined in collective_all_reduce_strategy.py
+
 # TODO(yuefengz): support in-graph replication.
 @tf_export("distribute.experimental.MultiWorkerMirroredStrategy")
 class CollectiveAllReduceStrategy(distribute_lib.DistributionStrategy):
@@ -125,6 +129,7 @@ class CollectiveAllReduceExtended(mirrored_strategy.MirroredExtended):
     self._collective_keys = cross_device_utils.CollectiveKeys()
     super(CollectiveAllReduceExtended, self)._initialize_local(local_devices)
     # TODO(yuefengz): remove num_gpus_per_worker from CollectiveAllReduce.
+    # todo(zaman): need to remove num_gpus as it may be null
     self._cross_device_ops = cross_device_ops_lib.CollectiveAllReduce(
         num_workers=self._num_workers,
         num_gpus_per_worker=num_gpus,

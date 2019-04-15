@@ -36,7 +36,7 @@ from tensorflow.python.training import server_lib
 
 _thread_local = threading.local()
 
-
+# todo(zaman): specifying task type
 class _TaskType(object):
   PS = "ps"
   WORKER = "worker"

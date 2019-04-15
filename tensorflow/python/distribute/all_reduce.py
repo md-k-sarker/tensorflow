@@ -14,6 +14,7 @@
 # ==============================================================================
 """Utilities to construct a TF subgraph implementing distributed All-Reduce."""
 
+#
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -251,6 +252,8 @@ def _ring_permutations(num_workers, num_subchunks, gpu_perm):
   return (pred_by_s_d, rank_by_s_d)
 
 
+# todo(zaman): main function for ring all_reduce
+# being called from cross_device_utils.py
 def build_ring_all_reduce(input_tensors, num_workers, num_subchunks,
                           gpu_perm, red_op, un_op=None):
   """Construct a subgraph performing a ring-style all-reduce of input_tensors.

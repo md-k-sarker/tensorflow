@@ -25,7 +25,7 @@ from tensorflow.core.protobuf.tensorflow_server_pb2 import ServerDef
 from tensorflow.python.eager import context
 from tensorflow.python.util.tf_export import tf_export
 
-
+# todo(zaman): grpc server connection
 @tf_export("config.experimental_connect_to_host")
 def connect_to_remote_host(remote_host=None, job_name="worker"):
   """Connects to a single machine to enable remote execution on it.

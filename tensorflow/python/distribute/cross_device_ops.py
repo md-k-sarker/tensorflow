@@ -976,8 +976,6 @@ class CollectiveAllReduce(CrossDeviceOps):
     super(CollectiveAllReduce, self).__init__()
 
   def reduce_implementation(self, reduce_op, per_replica_value, destinations):
-    """(zaman) : important function for reduce implementations
-    """
     all_reduced = self._batch_all_reduce(reduce_op, [per_replica_value])[0]
     device_map, logical_device = get_device_map_from(destinations)
     if (all_reduced.device_map is device_map and
