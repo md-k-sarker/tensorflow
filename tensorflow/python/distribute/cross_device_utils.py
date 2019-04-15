@@ -223,7 +223,7 @@ def split_grads_by_size(threshold_size, device_grads):
     if large_dl:
       large_grads.append(large_dl)
   return small_grads, large_grads
-
+ 
 
 # threading.Lock() and threading.local() cannot be pickled and therefore cannot
 # be a field of CollectiveKeys. Right now _thread_local is not necessary to be

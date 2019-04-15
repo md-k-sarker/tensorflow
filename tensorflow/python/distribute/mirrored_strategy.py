@@ -520,6 +520,7 @@ class MirroredExtended(distribute_lib.StrategyExtendedV1):
     self._input_workers = input_lib.InputWorkers(
         self._device_map, worker_devices)
 
+    # todo(zaman): mirror_strategy is calling multiworkerAllReduce from cross_device_ops.py file
     if len(workers) > 1:
       self._inferred_cross_device_ops = (
           cross_device_ops_lib.MultiWorkerAllReduce(

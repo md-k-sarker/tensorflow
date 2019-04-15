@@ -13,7 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 """Operations often used for initializing tensors.
-
+ 
 All variable initializers returned by functions in this file should have the
 following signature:
 

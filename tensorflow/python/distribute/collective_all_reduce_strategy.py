@@ -144,6 +144,7 @@ class CollectiveAllReduceExtended(mirrored_strategy.MirroredExtended):
     super(CollectiveAllReduceExtended, self)._initialize_local(local_devices)
     # TODO(yuefengz): remove num_gpus_per_worker from CollectiveAllReduce.
     # todo(zaman): need to remove num_gpus as it may be null
+    # todo(zaman): collective_all_reduce_strategy is calling CollectiveAllReduce from cross_device_ops.py file
     self._cross_device_ops = cross_device_ops_lib.CollectiveAllReduce(
         num_workers=self._num_workers,
         num_gpus_per_worker=num_gpus,
@@ -206,6 +207,8 @@ class CollectiveAllReduceExtended(mirrored_strategy.MirroredExtended):
     super(CollectiveAllReduceExtended, self)._initialize_local(local_devices)
     self._input_workers = input_lib.InputWorkers(
         self._device_map, [(self._worker_device, self.worker_devices)])
+    # todo(zaman): need to remove num_gpus as it may be null
+    # todo(zaman): collective_all_reduce_strategy is calling CollectiveAllReduce from cross_device_ops.py file
     self._cross_device_ops = cross_device_ops_lib.CollectiveAllReduce(
         num_workers=self._num_workers,
         num_gpus_per_worker=num_gpus,
